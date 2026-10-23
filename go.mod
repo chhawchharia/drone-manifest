@@ -2,6 +2,8 @@ module github.com/drone-plugins/drone-manifest
 
 go 1.20
 
+toolchain go1.26.10
+
 require (
 	github.com/coreos/go-semver v0.3.1
 	github.com/drone/drone-go v1.7.1
