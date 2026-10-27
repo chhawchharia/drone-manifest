@@ -9,7 +9,7 @@ pool:
 
 steps:
   - name: lint
-    image: harness0.harness.io/oci/docker_artifacts/hhi/go:1.26.10@sha256:718fddf012b3a305e936ae9964e5a642036bcb7b4c6c0786e2f78f238d637db8
+    image: golang:1.26.10@sha256:24a707af49702fa44f02785475d02fb752f6982d3e9c0afb7696e1f0204e7ce9
     pull: always
     commands:
       - go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
@@ -19,7 +19,7 @@ steps:
       - name: gopath
         path: "/go"
   - name: test
-    image: harness0.harness.io/oci/docker_artifacts/hhi/go:1.26.10@sha256:718fddf012b3a305e936ae9964e5a642036bcb7b4c6c0786e2f78f238d637db8
+    image: golang:1.26.10@sha256:24a707af49702fa44f02785475d02fb752f6982d3e9c0afb7696e1f0204e7ce9
     commands:
       - go test -cover ./...
     volumes:
@@ -46,7 +46,7 @@ pool:
 
 steps:
   - name: environment
-    image: harness0.harness.io/oci/docker_artifacts/hhi/go:1.26.10@sha256:718fddf012b3a305e936ae9964e5a642036bcb7b4c6c0786e2f78f238d637db8
+    image: golang:1.26.10@sha256:24a707af49702fa44f02785475d02fb752f6982d3e9c0afb7696e1f0204e7ce9
     pull: always
     environment:
       CGO_ENABLED: "0"
@@ -54,7 +54,7 @@ steps:
       - go version
       - go env
   - name: build
-    image: harness0.harness.io/oci/docker_artifacts/hhi/go:1.26.10@sha256:718fddf012b3a305e936ae9964e5a642036bcb7b4c6c0786e2f78f238d637db8
+    image: golang:1.26.10@sha256:24a707af49702fa44f02785475d02fb752f6982d3e9c0afb7696e1f0204e7ce9
     environment:
       CGO_ENABLED: "0"
     commands:
@@ -108,7 +108,7 @@ pool:
 
 steps:
   - name: environment
-    image: harness0.harness.io/oci/docker_artifacts/hhi/go:1.26.10@sha256:718fddf012b3a305e936ae9964e5a642036bcb7b4c6c0786e2f78f238d637db8
+    image: golang:1.26.10@sha256:24a707af49702fa44f02785475d02fb752f6982d3e9c0afb7696e1f0204e7ce9
     pull: always
     environment:
       CGO_ENABLED: "0"
@@ -116,7 +116,7 @@ steps:
       - go version
       - go env
   - name: build
-    image: harness0.harness.io/oci/docker_artifacts/hhi/go:1.26.10@sha256:718fddf012b3a305e936ae9964e5a642036bcb7b4c6c0786e2f78f238d637db8
+    image: golang:1.26.10@sha256:24a707af49702fa44f02785475d02fb752f6982d3e9c0afb7696e1f0204e7ce9
     environment:
       CGO_ENABLED: "0"
     commands:
@@ -170,7 +170,7 @@ pool:
 
 steps:
   - name: environment
-    image: golang:1.20
+    image: golang:1.20-windowsservercore-1809@sha256:559e0dbe6cd259d8bbc1e973469659b8520ba859a055fa54684b16c061b701e0
     pull: always
     environment:
       CGO_ENABLED: "0"
@@ -179,7 +179,7 @@ steps:
       - go version
       - go env
   - name: build
-    image: golang:1.20
+    image: golang:1.20-windowsservercore-1809@sha256:559e0dbe6cd259d8bbc1e973469659b8520ba859a055fa54684b16c061b701e0
     environment:
       CGO_ENABLED: "0"
     commands:
@@ -224,20 +224,18 @@ pool:
 
 steps:
   - name: environment
-    image: golang:1.20
+    image: golang:1.26.10-windowsservercore-ltsc2022@sha256:c3eadda68ea666345f08d09104362a03a255e7ae1ff42d1b3897f4dbd698e222
     pull: always
     environment:
       CGO_ENABLED: "0"
     commands:
-      - . ./scripts/setup-go-windows.ps1
       - go version
       - go env
   - name: build
-    image: golang:1.20
+    image: golang:1.26.10-windowsservercore-ltsc2022@sha256:c3eadda68ea666345f08d09104362a03a255e7ae1ff42d1b3897f4dbd698e222
     environment:
       CGO_ENABLED: "0"
     commands:
-      - . ./scripts/setup-go-windows.ps1
       - go build -v -ldflags "-X main.version=" -a -tags netgo -o release/windows/amd64/drone-manifest.exe .
   - name: docker
     image: plugins/docker

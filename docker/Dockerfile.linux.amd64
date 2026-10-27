@@ -1,4 +1,12 @@
-FROM harness0.harness.io/oci/docker_artifacts/hhi/harnessos-alpine:1@sha256:290a37c85b4284d2c11fa0778e5da79643d912a1f5a57d6f701b77644503b7e7
+FROM alpine:3.22@sha256:2e0b81d60597f449baa56dc25d355367869d2dca4cd57e866f1e2b52af3eb55f AS certificates
+RUN apk add --no-cache 'ca-certificates>=20261020-r0'
+
+FROM --platform=linux/amd64 plugins/base:multiarch@sha256:5f8ee491ed20a4333899b43624e30232a02b450f7f0ce0bd4797e22216ebe579 AS base
+
+FROM scratch
+COPY --from=base /etc/mime.types /etc/mime.types
+COPY --from=certificates /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
+ENV GODEBUG=netdns=go
 
 LABEL maintainer="Drone.IO Community <drone-dev@googlegroups.com>" \
   org.label-schema.name="Drone Manifest" \
