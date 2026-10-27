@@ -100,8 +100,6 @@ pipeline:
                         connectorRef: Plugins_Docker_Hub_Connector
                         image: plugins/docker
                         settings:
-                          pull_image: true
-                          no_cache: true
                           username: drone
                           password: <+secrets.getValue("Plugins_Docker_Hub_Pat")>
                           repo: plugins/manifest
@@ -116,10 +114,6 @@ pipeline:
                       name: BuildAndPushDockerRegistry
                       identifier: BuildAndPushDockerRegistry
                       spec:
-                        envVariables:
-                          PLUGIN_NO_CACHE: "true"
-                          PLUGIN_PULL_IMAGE: "true"
-                          PLUGIN_ENABLE_CACHE: "false"
                         connectorRef: Plugins_Docker_Hub_Connector
                         repo: plugins/manifest
                         tags:
@@ -179,8 +173,6 @@ pipeline:
                         connectorRef: Plugins_Docker_Hub_Connector
                         image: plugins/docker
                         settings:
-                          pull_image: true
-                          no_cache: true
                           username: drone
                           password: <+secrets.getValue("Plugins_Docker_Hub_Pat")>
                           repo: plugins/manifest
@@ -195,10 +187,6 @@ pipeline:
                       name: BuildAndPushDockerRegistry
                       identifier: BuildAndPushDockerRegistry
                       spec:
-                        envVariables:
-                          PLUGIN_NO_CACHE: "true"
-                          PLUGIN_PULL_IMAGE: "true"
-                          PLUGIN_ENABLE_CACHE: "false"
                         connectorRef: Plugins_Docker_Hub_Connector
                         repo: plugins/manifest
                         tags:
@@ -247,8 +235,6 @@ pipeline:
                         connectorRef: Plugins_Docker_Hub_Connector
                         image: plugins/docker
                         settings:
-                          pull_image: true
-                          no_cache: true
                           username: drone
                           password: <+secrets.getValue("Plugins_Docker_Hub_Pat")>
                           repo: plugins/manifest
@@ -263,10 +249,6 @@ pipeline:
                       name: BuildAndPushDockerRegistry
                       identifier: BuildAndPushDockerRegistry
                       spec:
-                        envVariables:
-                          PLUGIN_NO_CACHE: "true"
-                          PLUGIN_PULL_IMAGE: "true"
-                          PLUGIN_ENABLE_CACHE: "false"
                         connectorRef: Plugins_Docker_Hub_Connector
                         repo: plugins/manifest
                         tags:
@@ -311,14 +293,20 @@ pipeline:
                       spec:
                         connectorRef: Plugins_Docker_Hub_Connector
                         image: golang:1.26.10-windowsservercore-ltsc2022@sha256:c3eadda68ea666345f08d09104362a03a255e7ae1ff42d1b3897f4dbd698e222
-                        shell: Powershell
+                        shell: Sh
                         command: |-
-                          $ErrorActionPreference = "Stop"
-                          $env:GOPATH = ''
-                          $env:CGO_ENABLED = '0'
-                          $env:GOOS = 'windows'
+                          # force go modules
+                          export GOPATH=""
+
+                          # disable cgo
+                          export CGO_ENABLED=0
+
+                          set -e
+                          set -x
+
+                          # Windows
+                          GOOS=windows
                           go build -v -a -tags netgo -o release/windows/amd64/drone-manifest.exe .
-                          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
                   - step:
                       type: Plugin
                       name: BuildAndPushDockerPlugin
@@ -327,8 +315,6 @@ pipeline:
                         connectorRef: Plugins_Docker_Hub_Connector
                         image: plugins/docker
                         settings:
-                          pull_image: true
-                          no_cache: true
                           username: drone
                           password: <+secrets.getValue("Plugins_Docker_Hub_Pat")>
                           repo: plugins/manifest
@@ -343,10 +329,6 @@ pipeline:
                       name: BuildAndPushDockerRegistry
                       identifier: BuildAndPushDockerRegistry
                       spec:
-                        envVariables:
-                          PLUGIN_NO_CACHE: "true"
-                          PLUGIN_PULL_IMAGE: "true"
-                          PLUGIN_ENABLE_CACHE: "false"
                         connectorRef: Plugins_Docker_Hub_Connector
                         repo: plugins/manifest
                         tags:

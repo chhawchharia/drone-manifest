@@ -62,8 +62,6 @@ steps:
   - name: docker
     image: plugins/docker
     settings:
-      pull_image: true
-      no_cache: true
       dockerfile: docker/Dockerfile.linux.amd64
       repo: plugins/manifest
       username:
@@ -79,8 +77,6 @@ steps:
   - name: docker-dry-run
     image: plugins/docker
     settings:
-      pull_image: true
-      no_cache: true
       dockerfile: docker/Dockerfile.linux.amd64
       repo: plugins/manifest
       dry_run: true
@@ -124,8 +120,6 @@ steps:
   - name: docker
     image: plugins/docker
     settings:
-      pull_image: true
-      no_cache: true
       dockerfile: docker/Dockerfile.linux.arm64
       repo: plugins/manifest
       username:
@@ -141,8 +135,6 @@ steps:
   - name: docker-dry-run
     image: plugins/docker
     settings:
-      pull_image: true
-      no_cache: true
       dockerfile: docker/Dockerfile.linux.arm64
       repo: plugins/manifest
       dry_run: true
@@ -188,8 +180,6 @@ steps:
   - name: docker
     image: plugins/docker
     settings:
-      pull_image: true
-      no_cache: true
       dockerfile: docker/Dockerfile.windows.1809
       repo: plugins/manifest
       username:
@@ -240,8 +230,6 @@ steps:
   - name: docker
     image: plugins/docker
     settings:
-      pull_image: true
-      no_cache: true
       dockerfile: docker/Dockerfile.windows.ltsc2022
       repo: plugins/manifest
       username:

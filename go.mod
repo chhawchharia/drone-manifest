@@ -1,6 +1,6 @@
 module github.com/drone-plugins/drone-manifest
 
-go 1.26.10
+go 1.20
 
 require (
 	github.com/coreos/go-semver v0.3.1
